@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#ffccd5,#ffe6f0);
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+color:#ff0066;
+}
+
+/* ---------------- INTRO SECTION ---------------- */
+#intro{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff9eb5,#ffc2d1);
+animation:pulseBG 4s infinite alternate;
+z-index:10;
+}
+
+@keyframes pulseBG{
+0%{filter:brightness(1);}
+100%{filter:brightness(1.1);}
+}
+
+#intro h1{
+font-size:3em;
+margin-bottom:30px;
+animation:floatText 3s ease-in-out infinite alternate;
+}
+
+@keyframes floatText{
+0%{transform:translateY(0);}
+100%{transform:translateY(-15px);}
+}
+
+.buttons{
+display:flex;
+gap:30px;
+position:relative;
+}
+
+button{
+padding:15px 35px;
+font-size:1.2em;
+border:none;
+border-radius:30px;
+cursor:pointer;
+transition:all .3s ease;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+#yesBtn{
+background:#ff3366;
+color:white;
+}
+
+#yesBtn:hover{
+transform:scale(1.2);
+}
+
+#noBtn{
+background:white;
+color:#ff3366;
+position:relative;
+}
+
+/* Tease Popup */
+#tease{
+position:absolute;
+bottom:20%;
+background:white;
+padding:20px 30px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,.3);
+opacity:0;
+transition:opacity .5s ease;
+font-weight:bold;
+}
+
+/* ---------------- MAIN CONTENT ---------------- */
+
+#mainContent{
+display:none;
+flex-direction:column;
+align-items:center;
+width:100%;
+height:100%;
+overflow:auto;
+padding-top:40px;
+}
+
+/* Floating Hearts */
+.floating-heart{
+width:50px;height:50px;
+background:#ff3366;
+position:absolute;
+transform:rotate(-45deg);
+cursor:pointer;
+animation:float 4s ease-in-out infinite alternate;
+}
+.floating-heart:before,.floating-heart:after{
+content:"";
+width:50px;height:50px;
+background:#ff3366;
+border-radius:50%;
+position:absolute;
+}
+.floating-heart:before{top:-25px;left:0;}
+.floating-heart:after{left:25px;top:0;}
+
+@keyframes float{
+0%{transform:translateY(0) rotate(-45deg);}
+100%{transform:translateY(-100px) rotate(-45deg);}
+}
+
+#messagesContainer{
+margin-top:150px;
+display:flex;
+flex-direction:column;
+gap:20px;
+width:80%;
+}
+
+.message-card{
+padding:20px;
+background:white;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+transform:translateY(-200px);
+opacity:0;
+}
+
+.message-card.short{transition:all 1s ease;}
+.message-card.long{transition:all 4s ease;}
+
+.message-card.show{
+transform:translateY(0);
+opacity:1;
+}
+
+/* Memories */
+#memoriesSession{
+display:none;
+flex-direction:column;
+align-items:center;
+margin-top:40px;
+}
+
+.memory-img{
+width:200px;
+margin:15px;
+border-radius:15px;
+opacity:0;
+transform:translateX(-150px);
+transition:all .8s ease;
+}
+
+.memory-img.visible{
+opacity:1;
+transform:translateX(0);
+}
+
+#finalMessage{
+margin-top:30px;
+font-size:1.5em;
+font-weight:bold;
+white-space:pre-wrap;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+</style>
+</head>
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+<h1>Will you be my Val? 💖</h1>
+<div class="buttons">
+<button id="yesBtn">Yes 💕</button>
+<button id="noBtn">No 🙃</button>
+</div>
+<div id="tease"></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="mainContent">
+<audio id="song1" src="YOUR_FIRST_SONG.mp3" autoplay loop></audio>
+<audio id="song2" src="YOUR_SECOND_SONG.mp3" loop></audio>
+
+<div id="heartsContainer"></div>
+
+<div id="messagesContainer">
+<div class="message-card short">Year 1: From the first moment I saw you, my world changed 💖</div>
+<div class="message-card short">Year 2: Your laughter became my daily addiction 😂💕</div>
+<div class="message-card long">Year 3: We grew stronger. Through talks, fights, laughter, and random nonsense, we built something real and beautiful 🌸.</div>
+<div class="message-card long">Year 4: You became my peace, my safe place, my favorite human in the whole world 🌍.</div>
+<div class="message-card long">Year 5: We created memories I replay in my mind like my favorite movie 🎬💞.</div>
+<div class="message-card long">Year 6: You stood by me when things weren’t easy. That loyalty means everything ❤️.</div>
+<div class="message-card long">Year 7: Seven years… and somehow I love you even more than day one 💕.</div>
+</div>
+
+<div id="memoriesSession">
+<h1>Our Beautiful Memories 💖</h1>
+<img src="https://via.placeholder.com/200" class="memory-img">
+<img src="https://via.placeholder.com/200" class="memory-img">
+<img src="https://via.placeholder.com/200" class="memory-img">
+<img src="https://via.placeholder.com/200" class="memory-img">
+<div id="finalMessage"></div>
+</div>
+
+<canvas id="confetti"></canvas>
+</div>
+
+<script>
+const intro=document.getElementById("intro");
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const tease=document.getElementById("tease");
+let noStartTime=null;
+
+/* NO BUTTON RUNS AWAY */
+noBtn.addEventListener("mouseover",()=>{
+if(!noStartTime) noStartTime=Date.now();
+const x=Math.random()*window.innerWidth-100;
+const y=Math.random()*window.innerHeight-100;
+noBtn.style.position="absolute";
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+
+if(Date.now()-noStartTime>5000){
+tease.innerText="Like seriously? You want to click No? 👀 You are now following another man abi? Oya click Yes before I change my mind 😏";
+tease.style.opacity=1;
+setTimeout(()=>{tease.style.opacity=0;},5000);
+}
+});
+
+/* YES BUTTON STARTS EVERYTHING */
+yesBtn.addEventListener("click",()=>{
+intro.style.display="none";
+document.getElementById("mainContent").style.display="flex";
+});
+
+/* HEARTS SECTION */
+const heartsContainer=document.getElementById("heartsContainer");
+const messages=[...document.querySelectorAll(".message-card")];
+let heartsClicked=0;
+
+for(let i=0;i<7;i++){
+let heart=document.createElement("div");
+heart.className="floating-heart";
+heart.style.left=(10+i*12)+"%";
+heart.style.top=(100+Math.random()*100)+"px";
+heart.onclick=()=>{
+messages[i].classList.add("show");
+heart.style.display="none";
+heartsClicked++;
+if(heartsClicked===7){
+setTimeout(startMemories,3000);
+}
+};
+heartsContainer.appendChild(heart);
+}
+
+function startMemories(){
+heartsContainer.style.display="none";
+document.getElementById("memoriesSession").style.display="flex";
+const imgs=document.querySelectorAll(".memory-img");
+slideImages(imgs,0);
+}
+
+function slideImages(imgs,i){
+if(i>=imgs.length){
+startTypewriter();
+return;
+}
+imgs[i].classList.add("visible");
+setTimeout(()=>slideImages(imgs,i+1),800);
+}
+
+function startTypewriter(){
+const text=`My love ❤️,
+
+I may not be able to give you everything right now… but I promise you this — one day I will give you the world 🌍. I will take you around the world ✈️, create memories in places we have never been, and build a life we once only dreamed about.
+
+I promise to marry you, to grow old with you 👵👴, to hold your hands through every storm and celebrate every sunshine ☀️.
+
+I promise to support you, believe in you, annoy you with love 😂, protect you, and choose you every single day.
+
+Even when we have grey hair and back pain 🤣, I will still look at you like you are the most beautiful woman alive.
+
+You are my heart, my peace, my happiness, my forever.
+
+I love you [Her Name], you are my everything 💖😂`;
+
+let el=document.getElementById("finalMessage");
+let i=0;
+function type(){
+if(i<text.length){
+el.innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,40);
+}
+}
+type();
+}
+
+/* CONFETTI */
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+let pieces=[];
+for(let i=0;i<200;i++){
+pieces.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,
+r:Math.random()*6+2,d:Math.random()*20+10});
+}
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+pieces.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
+ctx.fill();
+p.y+=2;
+if(p.y>canvas.height)p.y=0;
+});
+requestAnimationFrame(draw);
+}
+draw();
+</script>
+
+</body>
+</html>
