@@ -3,352 +3,311 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Be My Valentine 💖</title>
+<title>Happy 7 Years Valentine ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
 
 body{
-font-family:'Segoe UI',sans-serif;
-background:linear-gradient(135deg,#ffccd5,#ffe6f0);
-height:100vh;
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-color:#ff0066;
+background: linear-gradient(135deg,#ff4e88,#ff8fab,#ffc2d1);
+overflow-x:hidden;
+color:white;
+text-align:center;
 }
 
-/* ---------------- INTRO SECTION ---------------- */
-#intro{
-position:absolute;
+/* Header */
+header{
+position:fixed;
+top:0;
 width:100%;
-height:100%;
+padding:20px;
+font-size:28px;
+font-weight:600;
+background:rgba(0,0,0,0.2);
+backdrop-filter:blur(10px);
+z-index:1000;
+display:none; /* Hidden initially */
+}
+
+.section{
+min-height:100vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-background:linear-gradient(135deg,#ff9eb5,#ffc2d1);
-animation:pulseBG 4s infinite alternate;
-z-index:10;
-}
-
-@keyframes pulseBG{
-0%{filter:brightness(1);}
-100%{filter:brightness(1.1);}
+padding:100px 20px 40px;
 }
 
 #intro h1{
-font-size:3em;
+font-size:40px;
 margin-bottom:30px;
-animation:floatText 3s ease-in-out infinite alternate;
 }
 
-@keyframes floatText{
-0%{transform:translateY(0);}
-100%{transform:translateY(-15px);}
-}
-
-.buttons{
-display:flex;
-gap:30px;
-position:relative;
-}
-
-button{
-padding:15px 35px;
-font-size:1.2em;
+.btn{
+padding:15px 40px;
+margin:15px;
 border:none;
-border-radius:30px;
+border-radius:40px;
+font-size:18px;
 cursor:pointer;
-transition:all .3s ease;
-box-shadow:0 5px 15px rgba(0,0,0,.2);
+transition:0.3s;
 }
 
-#yesBtn{
-background:#ff3366;
-color:white;
-}
-
-#yesBtn:hover{
-transform:scale(1.2);
-}
-
-#noBtn{
+.yes{
 background:white;
-color:#ff3366;
-position:relative;
-}
-
-/* Tease Popup */
-#tease{
-position:absolute;
-bottom:20%;
-background:white;
-padding:20px 30px;
-border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,.3);
-opacity:0;
-transition:opacity .5s ease;
+color:#ff4e88;
 font-weight:bold;
 }
 
-/* ---------------- MAIN CONTENT ---------------- */
-
-#mainContent{
-display:none;
-flex-direction:column;
-align-items:center;
-width:100%;
-height:100%;
-overflow:auto;
-padding-top:40px;
+.no{
+background:black;
+color:white;
 }
 
-/* Floating Hearts */
-.floating-heart{
-width:50px;height:50px;
-background:#ff3366;
-position:absolute;
-transform:rotate(-45deg);
-cursor:pointer;
-animation:float 4s ease-in-out infinite alternate;
-}
-.floating-heart:before,.floating-heart:after{
-content:"";
-width:50px;height:50px;
-background:#ff3366;
-border-radius:50%;
-position:absolute;
-}
-.floating-heart:before{top:-25px;left:0;}
-.floating-heart:after{left:25px;top:0;}
-
-@keyframes float{
-0%{transform:translateY(0) rotate(-45deg);}
-100%{transform:translateY(-100px) rotate(-45deg);}
+.btn:hover{
+transform:scale(1.1);
 }
 
-#messagesContainer{
-margin-top:150px;
-display:flex;
-flex-direction:column;
-gap:20px;
-width:80%;
-}
-
-.message-card{
-padding:20px;
+#popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
 background:white;
+color:#ff4e88;
+padding:25px 40px;
 border-radius:20px;
-box-shadow:0 5px 15px rgba(0,0,0,.2);
-transform:translateY(-200px);
-opacity:0;
-}
-
-.message-card.short{transition:all 1s ease;}
-.message-card.long{transition:all 4s ease;}
-
-.message-card.show{
-transform:translateY(0);
-opacity:1;
-}
-
-/* Memories */
-#memoriesSession{
+font-weight:600;
 display:none;
-flex-direction:column;
-align-items:center;
+z-index:2000;
+box-shadow:0 0 20px rgba(0,0,0,0.3);
+transition:opacity 1s;
+}
+
+.hearts{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:25px;
 margin-top:40px;
 }
 
-.memory-img{
-width:200px;
-margin:15px;
-border-radius:15px;
-opacity:0;
-transform:translateX(-150px);
-transition:all .8s ease;
+.heart{
+font-size:40px;
+cursor:pointer;
+transition:0.3s;
 }
 
-.memory-img.visible{
+.heart:hover{
+transform:scale(1.3);
+}
+
+#messages{
+margin-top:40px;
+width:90%;
+max-width:700px;
+position:relative;
+}
+
+.message{
+background:rgba(255,255,255,0.2);
+padding:20px;
+border-radius:20px;
+margin:15px 0;
+animation:drop 2s forwards;
+opacity:0;
+}
+
+@keyframes drop{
+from{
+transform:translateY(-100vh);
+opacity:0;
+}
+to{
+transform:translateY(0);
+opacity:1;
+}
+}
+
+.memory{
+width:80%;
+max-width:600px;
+margin:20px auto;
+opacity:0;
+transform:translateX(-100px);
+transition:1s;
+border-radius:20px;
+}
+
+.memory.show{
 opacity:1;
 transform:translateX(0);
 }
 
 #finalMessage{
 margin-top:30px;
-font-size:1.5em;
-font-weight:bold;
+font-size:20px;
+max-width:800px;
+min-height:200px;
 white-space:pre-wrap;
+font-family:'Great Vibes',cursive;
+font-size:28px;
 }
 
-canvas{
-position:fixed;
-top:0;
-left:0;
-pointer-events:none;
+.hidden{
+display:none;
 }
 </style>
 </head>
+
 <body>
 
-<!-- INTRO -->
-<div id="intro">
-<h1>Will you be my Val? 💖</h1>
-<div class="buttons">
-<button id="yesBtn">Yes 💕</button>
-<button id="noBtn">No 🙃</button>
-</div>
-<div id="tease"></div>
+<header id="mainHeader">Happy 7 Years Valentine ❤️</header>
+
+<div class="section" id="intro">
+<h1>Will you be my Val? 💌</h1>
+<button class="btn yes" onclick="startLove()">Yes ❤️</button>
+<button class="btn no" onclick="noClick()">No 🙄</button>
 </div>
 
-<!-- MAIN CONTENT -->
-<div id="mainContent">
-<audio id="song1" src="YOUR_FIRST_SONG.mp3" autoplay loop></audio>
-<audio id="song2" src="YOUR_SECOND_SONG.mp3" loop></audio>
+<div id="popup"></div>
 
-<div id="heartsContainer"></div>
-
-<div id="messagesContainer">
-<div class="message-card short">Year 1: From the first moment I saw you, my world changed 💖</div>
-<div class="message-card short">Year 2: Your laughter became my daily addiction 😂💕</div>
-<div class="message-card long">Year 3: We grew stronger. Through talks, fights, laughter, and random nonsense, we built something real and beautiful 🌸.</div>
-<div class="message-card long">Year 4: You became my peace, my safe place, my favorite human in the whole world 🌍.</div>
-<div class="message-card long">Year 5: We created memories I replay in my mind like my favorite movie 🎬💞.</div>
-<div class="message-card long">Year 6: You stood by me when things weren’t easy. That loyalty means everything ❤️.</div>
-<div class="message-card long">Year 7: Seven years… and somehow I love you even more than day one 💕.</div>
+<div class="section hidden" id="heartSection">
+<h2>Click each heart for every year we've shared ❤️</h2>
+<div class="hearts" id="heartContainer"></div>
+<div id="messages"></div>
 </div>
 
-<div id="memoriesSession">
-<h1>Our Beautiful Memories 💖</h1>
-<img src="https://via.placeholder.com/200" class="memory-img">
-<img src="https://via.placeholder.com/200" class="memory-img">
-<img src="https://via.placeholder.com/200" class="memory-img">
-<img src="https://via.placeholder.com/200" class="memory-img">
+<div class="section hidden" id="memorySection">
+<h2>Our Beautiful Memories 📸</h2>
+
+<img src="asset/first.png" class="memory">
+<img src="asset/second.jpeg" class="memory">
+<img src="asset/third.jpeg" class="memory">
+<img src="asset/fourth.jpeg" class="memory">
+<img src="asset/fifth.png" class="memory">
+<img src="asset/sixth.jpeg" class="memory">
+<img src="asset/seventh.jpeg" class="memory">
 <div id="finalMessage"></div>
 </div>
 
-<canvas id="confetti"></canvas>
-</div>
+<audio id="song" src="asset/WhatsApp Audio 2026-02-13 at 9.02.48 AM.mpeg" loop></audio>
 
 <script>
-const intro=document.getElementById("intro");
-const yesBtn=document.getElementById("yesBtn");
-const noBtn=document.getElementById("noBtn");
-const tease=document.getElementById("tease");
-let noStartTime=null;
+const messages = [
+"Year 1 ❤️\nThe beginning of us. Two souls learning each other, laughing at silly jokes, pretending not to fall too fast… but we both knew 😌",
+"Year 2 💕\nWe started growing deeper. Late night calls, random fights, making up like babies 😂 but loving each other stronger every day.",
+"Year 3 💖\nThis was the year I truly understood what loving you meant. Not just butterflies… but commitment, patience, growth, choosing you even on hard days. Learning your fears, your dreams, your silence, your laughter. Real love isn’t perfect — it’s intentional. And I chose you. Every single time. ❤️",
+"Year 4 💗\nWe became stronger. Challenges came, but so did our bond. You showed me loyalty I never experienced before.",
+"Year 5 💞\nWe matured together. Dreams became serious conversations. Future plans felt real. Marriage started sounding beautiful with your name next to mine 😏",
+"Year 6 💘\nWe built something unbreakable. Not just love — but partnership. You became my peace, my safe place.",
+"Year 7 💍\nSeven years. Seven chapters. And I would choose you in every lifetime. You are not just my girlfriend… you are my answered prayer."
+];
 
-/* NO BUTTON RUNS AWAY */
-noBtn.addEventListener("mouseover",()=>{
-if(!noStartTime) noStartTime=Date.now();
-const x=Math.random()*window.innerWidth-100;
-const y=Math.random()*window.innerHeight-100;
-noBtn.style.position="absolute";
-noBtn.style.left=x+"px";
-noBtn.style.top=y+"px";
-
-if(Date.now()-noStartTime>5000){
-tease.innerText="Like seriously? You want to click No? 👀 You are now following another man abi? Oya click Yes before I change my mind 😏";
-tease.style.opacity=1;
-setTimeout(()=>{tease.style.opacity=0;},5000);
-}
-});
-
-/* YES BUTTON STARTS EVERYTHING */
-yesBtn.addEventListener("click",()=>{
-intro.style.display="none";
-document.getElementById("mainContent").style.display="flex";
-});
-
-/* HEARTS SECTION */
-const heartsContainer=document.getElementById("heartsContainer");
-const messages=[...document.querySelectorAll(".message-card")];
-let heartsClicked=0;
+let clicked = 0;
+const heartContainer = document.getElementById("heartContainer");
+const messagesDiv = document.getElementById("messages");
 
 for(let i=0;i<7;i++){
 let heart=document.createElement("div");
-heart.className="floating-heart";
-heart.style.left=(10+i*12)+"%";
-heart.style.top=(100+Math.random()*100)+"px";
+heart.classList.add("heart");
+heart.innerHTML="❤️";
 heart.onclick=()=>{
-messages[i].classList.add("show");
-heart.style.display="none";
-heartsClicked++;
-if(heartsClicked===7){
-setTimeout(startMemories,3000);
-}
-};
-heartsContainer.appendChild(heart);
-}
-
-function startMemories(){
-heartsContainer.style.display="none";
-document.getElementById("memoriesSession").style.display="flex";
-const imgs=document.querySelectorAll(".memory-img");
-slideImages(imgs,0);
-}
-
-function slideImages(imgs,i){
-if(i>=imgs.length){
-startTypewriter();
-return;
-}
-imgs[i].classList.add("visible");
-setTimeout(()=>slideImages(imgs,i+1),800);
-}
-
-function startTypewriter(){
-const text=`My love ❤️,
-
-I may not be able to give you everything right now… but I promise you this — one day I will give you the world 🌍. I will take you around the world ✈️, create memories in places we have never been, and build a life we once only dreamed about.
-
-I promise to marry you, to grow old with you 👵👴, to hold your hands through every storm and celebrate every sunshine ☀️.
-
-I promise to support you, believe in you, annoy you with love 😂, protect you, and choose you every single day.
-
-Even when we have grey hair and back pain 🤣, I will still look at you like you are the most beautiful woman alive.
-
-You are my heart, my peace, my happiness, my forever.
-
-I love you [Her Name], you are my everything 💖😂`;
-
-let el=document.getElementById("finalMessage");
-let i=0;
-function type(){
-if(i<text.length){
-el.innerHTML+=text.charAt(i);
-i++;
-setTimeout(type,40);
+if(!heart.classList.contains("clicked")){
+heart.classList.add("clicked");
+showMessage(i);
+clicked++;
+if(clicked===7){
+setTimeout(()=>{
+document.getElementById("heartSection").classList.add("hidden");
+document.getElementById("memorySection").classList.remove("hidden");
+showMemories();
+},10000);
 }
 }
-type();
+}
+heartContainer.appendChild(heart);
 }
 
-/* CONFETTI */
-const canvas=document.getElementById("confetti");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-let pieces=[];
-for(let i=0;i<200;i++){
-pieces.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,
-r:Math.random()*6+2,d:Math.random()*20+10});
+function showMessage(i){
+let msg=document.createElement("div");
+msg.classList.add("message");
+if(i===2){
+msg.style.animation="drop 4s forwards";
 }
-function draw(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-pieces.forEach(p=>{
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
-ctx.fill();
-p.y+=2;
-if(p.y>canvas.height)p.y=0;
+msg.innerText=messages[i];
+messagesDiv.appendChild(msg);
+}
+
+function startLove(){
+document.getElementById("intro").classList.add("hidden");
+document.getElementById("heartSection").classList.remove("hidden");
+document.getElementById("mainHeader").style.display="block"; // Header appears here
+document.getElementById("song").play();
+}
+
+function noClick(){
+let popup=document.getElementById("popup");
+popup.innerHTML="Like seriously, so you want to click on no? You are now following another man ahbi? Oya goan click on Yes before I change my mind 😏";
+popup.style.display="block";
+popup.style.opacity="1";
+setTimeout(()=>{
+popup.style.opacity="0";
+setTimeout(()=>popup.style.display="none",1000);
+},3000);
+}
+
+function showMemories(){
+let memories=document.querySelectorAll(".memory");
+memories.forEach((img,index)=>{
+setTimeout(()=>{
+img.classList.add("show");
+if(index===memories.length-1){
+setTimeout(()=>{typeWriter();},1500);
+}
+},index*1500);
 });
-requestAnimationFrame(draw);
 }
-draw();
+
+const finalText = `.My love ❤️,
+
+Seven years with you feels like a beautiful movie I never want to end.  
+I may not have everything right now… I may not be able to give you the absolute best life yet — but I promise you, one day I will. I promise to work, to grow, to build, and to become the man that gives you the world 🌍.
+
+I promise to marry you 💍.  
+I promise to take you around the world — from quiet beaches to loud cities, from sunsets to snowy mornings ❄️.  
+I promise to support your dreams, protect your heart, and stand beside you no matter what life throws at us.
+
+When we grow old 👵🏽👴🏽, I want to still be teasing you, still holding your hand, still laughing at our inside jokes 😂.
+
+You are my peace.  
+You are my answered prayer.  
+You are my home.
+
+Even if I don’t have it all now, I have a heart that beats only for you ❤️. And that, I promise, will never change.
+
+I love you (Her Name),  
+you are my everything 💕`;
+
+function typeWriter(){
+let i=0;
+let speed=40;
+function typing(){
+if(i<finalText.length){
+document.getElementById("finalMessage").innerHTML+=finalText.charAt(i);
+i++;
+setTimeout(typing,speed);
+}
+}
+typing();
+}
 </script>
 
 </body>
