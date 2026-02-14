@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 7 Years Valentine ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background: linear-gradient(135deg,#ff4e88,#ff8fab,#ffc2d1);
+overflow-x:hidden;
+color:white;
+text-align:center;
+}
+
+/* Header */
+header{
+position:fixed;
+top:0;
+width:100%;
+padding:20px;
+font-size:28px;
+font-weight:600;
+background:rgba(0,0,0,0.2);
+backdrop-filter:blur(10px);
+z-index:1000;
+display:none; /* Hidden initially */
+}
+
+.section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:100px 20px 40px;
+}
+
+#intro h1{
+font-size:40px;
+margin-bottom:30px;
+}
+
+.btn{
+padding:15px 40px;
+margin:15px;
+border:none;
+border-radius:40px;
+font-size:18px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.yes{
+background:white;
+color:#ff4e88;
+font-weight:bold;
+}
+
+.no{
+background:black;
+color:white;
+}
+
+.btn:hover{
+transform:scale(1.1);
+}
+
+#popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+color:#ff4e88;
+padding:25px 40px;
+border-radius:20px;
+font-weight:600;
+display:none;
+z-index:2000;
+box-shadow:0 0 20px rgba(0,0,0,0.3);
+transition:opacity 1s;
+}
+
+.hearts{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:25px;
+margin-top:40px;
+}
+
+.heart{
+font-size:40px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.heart:hover{
+transform:scale(1.3);
+}
+
+#messages{
+margin-top:40px;
+width:90%;
+max-width:700px;
+position:relative;
+}
+
+.message{
+background:rgba(255,255,255,0.2);
+padding:20px;
+border-radius:20px;
+margin:15px 0;
+animation:drop 2s forwards;
+opacity:0;
+}
+
+@keyframes drop{
+from{
+transform:translateY(-100vh);
+opacity:0;
+}
+to{
+transform:translateY(0);
+opacity:1;
+}
+}
+
+.memory{
+width:80%;
+max-width:600px;
+margin:20px auto;
+opacity:0;
+transform:translateX(-100px);
+transition:1s;
+border-radius:20px;
+}
+
+.memory.show{
+opacity:1;
+transform:translateX(0);
+}
+
+#finalMessage{
+margin-top:30px;
+font-size:20px;
+max-width:800px;
+min-height:200px;
+white-space:pre-wrap;
+font-family:'Great Vibes',cursive;
+font-size:28px;
+}
+
+.hidden{
+display:none;
+}
+</style>
+</head>
+
+<body>
+
+<header id="mainHeader">Happy 7 Years Valentine ❤️</header>
+
+<div class="section" id="intro">
+<h1>Will you be my Val? 💌</h1>
+<button class="btn yes" onclick="startLove()">Yes ❤️</button>
+<button class="btn no" onclick="noClick()">No 🙄</button>
+</div>
+
+<div id="popup"></div>
+
+<div class="section hidden" id="heartSection">
+<h2>Click each heart for every year we've shared ❤️</h2>
+<div class="hearts" id="heartContainer"></div>
+<div id="messages"></div>
+</div>
+
+<div class="section hidden" id="memorySection">
+<h2>Our Beautiful Memories 📸</h2>
+
+<img src="asset/first.png" class="memory">
+<img src="asset/second.jpeg" class="memory">
+<img src="asset/third.jpeg" class="memory">
+<img src="asset/fourth.jpeg" class="memory">
+<img src="asset/fifth.png" class="memory">
+<img src="asset/sixth.jpeg" class="memory">
+<img src="asset/seventh.jpeg" class="memory">
+<div id="finalMessage"></div>
+</div>
+
+<audio id="song" src="asset/WhatsApp Audio 2026-02-13 at 9.02.48 AM.mpeg" loop></audio>
+
+<script>
+const messages = [
+"Year 1 ❤️\nThe beginning of us. Two souls learning each other, laughing at silly jokes, pretending not to fall too fast… but we both knew 😌",
+"Year 2 💕\nWe started growing deeper. Late night calls, random fights, making up like babies 😂 but loving each other stronger every day.",
+"Year 3 💖\nThis was the year I truly understood what loving you meant. Not just butterflies… but commitment, patience, growth, choosing you even on hard days. Learning your fears, your dreams, your silence, your laughter. Real love isn’t perfect — it’s intentional. And I chose you. Every single time. ❤️",
+"Year 4 💗\nWe became stronger. Challenges came, but so did our bond. You showed me loyalty I never experienced before.",
+"Year 5 💞\nWe matured together. Dreams became serious conversations. Future plans felt real. Marriage started sounding beautiful with your name next to mine 😏",
+"Year 6 💘\nWe built something unbreakable. Not just love — but partnership. You became my peace, my safe place.",
+"Year 7 💍\nSeven years. Seven chapters. And I would choose you in every lifetime. You are not just my girlfriend… you are my answered prayer."
+];
+
+let clicked = 0;
+const heartContainer = document.getElementById("heartContainer");
+const messagesDiv = document.getElementById("messages");
+
+for(let i=0;i<7;i++){
+let heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
+heart.onclick=()=>{
+if(!heart.classList.contains("clicked")){
+heart.classList.add("clicked");
+showMessage(i);
+clicked++;
+if(clicked===7){
+setTimeout(()=>{
+document.getElementById("heartSection").classList.add("hidden");
+document.getElementById("memorySection").classList.remove("hidden");
+showMemories();
+},10000);
+}
+}
+}
+heartContainer.appendChild(heart);
+}
+
+function showMessage(i){
+let msg=document.createElement("div");
+msg.classList.add("message");
+if(i===2){
+msg.style.animation="drop 4s forwards";
+}
+msg.innerText=messages[i];
+messagesDiv.appendChild(msg);
+}
+
+function startLove(){
+document.getElementById("intro").classList.add("hidden");
+document.getElementById("heartSection").classList.remove("hidden");
+document.getElementById("mainHeader").style.display="block"; // Header appears here
+document.getElementById("song").play();
+}
+
+function noClick(){
+let popup=document.getElementById("popup");
+popup.innerHTML="Like seriously, so you want to click on no? You are now following another man ahbi? Oya goan click on Yes before I change my mind 😏";
+popup.style.display="block";
+popup.style.opacity="1";
+setTimeout(()=>{
+popup.style.opacity="0";
+setTimeout(()=>popup.style.display="none",1000);
+},3000);
+}
+
+function showMemories(){
+let memories=document.querySelectorAll(".memory");
+memories.forEach((img,index)=>{
+setTimeout(()=>{
+img.classList.add("show");
+if(index===memories.length-1){
+setTimeout(()=>{typeWriter();},1500);
+}
+},index*1500);
+});
+}
+
+const finalText = `.My love ❤️,
+
+Seven years with you feels like a beautiful movie I never want to end.  
+I may not have everything right now… I may not be able to give you the absolute best life yet — but I promise you, one day I will. I promise to work, to grow, to build, and to become the man that gives you the world 🌍.
+
+I promise to marry you 💍.  
+I promise to take you around the world — from quiet beaches to loud cities, from sunsets to snowy mornings ❄️.  
+I promise to support your dreams, protect your heart, and stand beside you no matter what life throws at us.
+
+When we grow old 👵🏽👴🏽, I want to still be teasing you, still holding your hand, still laughing at our inside jokes 😂.
+
+You are my peace.  
+You are my answered prayer.  
+You are my home.
+
+Even if I don’t have it all now, I have a heart that beats only for you ❤️. And that, I promise, will never change.
+
+I love you (Her Name),  
+you are my everything 💕`;
+
+function typeWriter(){
+let i=0;
+let speed=40;
+function typing(){
+if(i<finalText.length){
+document.getElementById("finalMessage").innerHTML+=finalText.charAt(i);
+i++;
+setTimeout(typing,speed);
+}
+}
+typing();
+}
+</script>
+
+</body>
+</html>
